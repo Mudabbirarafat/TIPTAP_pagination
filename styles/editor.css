@@ -1,0 +1,65 @@
+/* ================= EDITOR PAGE LAYOUT ================= */
+
+.editor {
+  position: relative;
+  box-sizing: border-box;
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/* Visual gap between pages (SCREEN ONLY) */
+.editor::after {
+  content: '';
+  display: block;
+  height: 40px;
+}
+
+/* ================= PAGE BREAK LINE ================= */
+
+.page-break {
+  pointer-events: none;
+}
+
+/* ================= PAGE NUMBER (SCREEN ONLY) ================= */
+
+.page-number {
+  position: absolute;
+  font-size: 12px;
+  color: #555;
+  user-select: none;
+}
+
+/* ================= PRINT MODE ================= */
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .editor {
+    box-shadow: none;
+    margin: 0;
+  }
+
+  /* Hide screen-only helpers */
+  .editor::after {
+    display: none;
+  }
+
+  .page-break {
+    display: none !important;
+  }
+
+  .page-number {
+    display: none !important;
+  }
+
+  /* Let browser handle physical pagination */
+  .editor {
+    page-break-after: always;
+  }
+}
