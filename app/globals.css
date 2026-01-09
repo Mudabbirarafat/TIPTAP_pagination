@@ -2,5 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import editor-specific styles */
-@import "../styles/editor.css";
+@import '../styles/editor.css';
