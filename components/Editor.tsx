@@ -8,54 +8,33 @@ export default function Editor() {
   const editor = useEditor({
     extensions: [StarterKit],
     content: '<p>Start typing your legal document...</p>',
-    immediatelyRender: false, // prevents SSR hydration issues
+    immediatelyRender: false,
   })
 
   const { pageBreaks, containerRef } = usePagination(editor)
+  const totalPages = pageBreaks.length + 1
 
   return (
-    <div className="min-h-screen bg-gray-200 py-10">
-      <div className="relative mx-auto">
-        {/* Editor */}
-        <EditorContent
-          editor={editor}
-          className="editor"
-          ref={containerRef}
-        />
-
-        {/* Visual Page Breaks */}
-        {pageBreaks.map((top, index) => (
-          <div
-            key={`page-break-${index}`}
-            className="page-break absolute left-0 right-0 border-t-2 border-dashed border-gray-400"
-            style={{ top }}
-          />
+    <div className="doc-wrapper">
+      <div ref={containerRef} className="editor-shell">
+        {/* Fake page backgrounds */}
+        {Array.from({ length: totalPages }).map((_, i) => (
+          <div key={i} className="page-bg" />
         ))}
 
-        {/* Page Numbers (screen only) */}
-        {pageBreaks.map((top, index) => (
+        {/* Single Tiptap editor overlay */}
+        <EditorContent editor={editor} className="editor" />
+
+        {/* Page numbers */}
+        {Array.from({ length: totalPages }).map((_, i) => (
           <div
-            key={`page-number-${index}`}
-            className="page-number absolute text-xs text-gray-600"
-            style={{
-              top: top + 1020, // near bottom of page
-              right: '40px',
-            }}
+            key={`pn-${i}`}
+            className="page-number"
+            style={{ top: i * 1056 + 1020, right: 45 }}
           >
-            Page {index + 1}
+            Page {i + 1}
           </div>
         ))}
-
-        {/* Last Page Number */}
-        <div
-          className="page-number absolute text-xs text-gray-600"
-          style={{
-            top: (pageBreaks.length + 1) * 1056 - 36,
-            right: '40px',
-          }}
-        >
-          Page {pageBreaks.length + 1}
-        </div>
       </div>
     </div>
   )

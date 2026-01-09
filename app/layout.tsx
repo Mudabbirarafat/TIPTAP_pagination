@@ -1,7 +1,7 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Tiptap Pagination Editor',
+  title: 'Tiptap Pagination',
   description: 'Tiptap editor with real-time pagination',
 }
 
